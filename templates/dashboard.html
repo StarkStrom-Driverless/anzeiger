@@ -120,6 +120,33 @@
             </table>
         </div>
     </div>
+    <script>
+        const stationNames = ["Augsburg Haunstetter Straße", "Augsburg Sportanlage Süd P+R"];
+        let currentIndex = 0;
+
+        function updateStationTimetable() {
+            const haunstetterstrTable = document.getElementById("table-haunstetterstr");
+            const sportanlageTable = document.getElementById("table-sportanlage");
+
+            if (currentIndex === 0) {
+                haunstetterstrTable.style.display = "block";
+                sportanlageTable.style.display = "none";
+            } else {
+                haunstetterstrTable.style.display = "none";
+                sportanlageTable.style.display = "block";
+            }
+
+            const stationNameElement = document.getElementById("station-name");
+            stationNameElement.textContent = stationNames[currentIndex];
+            currentIndex = (currentIndex + 1) % stationNames.length;
+        }
+
+        // Call the function initially
+        updateStationTimetable();
+
+        // Set an interval to update the station timetable every 5 seconds (5000 milliseconds)
+        setInterval(updateStationTimetable, 5000);
+    </script>
 </body>
 
 </html>
