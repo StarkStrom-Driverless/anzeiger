@@ -15,7 +15,7 @@ updates:
     reviewers: [GoliathLabs]
     assignees: [GoliathLabs]
 
-  - package-ecosystem: python
+  - package-ecosystem: pip
     directory: /website
     schedule: {interval: monthly}
     reviewers: [GoliathLabs]
