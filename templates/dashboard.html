@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <meta http-equiv="refresh" content="60">
+    <title>DB Abfahrten</title>
+</head>
+
+<body style="font-size: 36px;">
+    <div class="wrapper">
+        <div class="headline">
+            <h1 style="font-size: 48px;">Abfahrt <span id="station-name">{{ best_found_location.name }}</span> <span class="otherlang" style="font-size: 28px;">Departure/Départ</span></h1>
+        </div>
+        <div class="stationclock">
+            <div style="display: flex; align-items: center;">
+                <div style="flex-grow: 1;">
+                    <canvas id="clock" width="120" height="120">Fehlermeldung</canvas>
+                </div>
+                <div class="dbimg" style="margin-left: 120px;"> <!-- Adjust the margin as needed -->
+                    <img src="{{ url_for('static', filename='goahead.png') }}" alt="" style="height: 120px;">
+                </div>
+                <div class="dbimg" style="margin-left: 120px;"> <!-- Adjust the margin as needed -->
+                    <img src="{{ url_for('static', filename='db.png') }}" alt="" style="height: 60px;">
+                </div>
+            </div>
+        </div>        
+    </div>
+    <!-- Scripts for the clock -->
+    <script type="text/javascript" src="{{ url_for('static', filename='station-clock.js') }}"></script>
+    <script type="text/javascript">
+        var clock = new StationClock("clock");
+        clock.body = StationClock.SmallWhiteBody;
+        clock.dial = StationClock.SwissStrokeDial;
+        clock.hourHand = StationClock.SwissHourHand;
+        clock.minuteHand = StationClock.SwissMinuteHand;
+        clock.secondHand = StationClock.HoleShapedSecondHand;
+        clock.boss = StationClock.NoBoss;
+        clock.minuteHandBehavoir = StationClock.BouncingMinuteHand;
+        clock.secondHandBehavoir = StationClock.OverhastySecondHand;
+
+        animate();
+
+        function animate() {
+            clock.draw();
+            window.setTimeout(animate, 50); // Corrected the setTimeout syntax
+        }
+    </script>
+
+    <!-- Table for Haunstetter Straße -->
+    <div class="container mt-4" id="table-haunstetterstr">
+        <div class="table-responsive">
+            <table class="table table-bordered" style="width:100%;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="zeit-column" style="font-size: 36px;">Zeit</th>
+                        <th class="zeit-column" style="font-size: 24px;"><span class="otherlang" style="font-size: 24px;">Time/Temps</span></th>
+                        <th class="zug-column" style="font-size: 36px;">Zug/Bus <span class="otherlang" style="font-size: 24px;">Train/Bus</span></th>
+                        <th class="ziel-column" style="font-size: 36px;">Ziel <span class="otherlang" style="font-size: 24px;">Destination</span></th>
+                        <th class="gleis-column" style="font-size: 36px;">Gleis <span class="otherlang" style="font-size: 24px;">Platform/Voie</span></th>
+                        <th class="status-column" style="font-size: 36px;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for departure in departures_haunstetterstr %}
+                    <tr class="{{ 'table-success' if not departure.cancelled else 'table-danger' }}">
+                        <td class="zeit-column" style="font-size: 36px;">{{ departure.dateTime.strftime('%H:%M') }}</td>
+                        <td class="zeit-column">
+                            {% if departure.delay_minutes is defined %}
+                                {{ departure.delay_minutes }} min
+                            {% else %}
+                                +0 min
+                            {% endif %}
+                        </td>
+                        <td class="zug-column" style="font-size: 36px;">{{ departure.name }}</td>
+                        <td class="ziel-column" style="font-size: 36px;">{{ departure.direction }}</td>
+                        <td class="gleis-column" style="font-size: 36px;">{{ departure.platform }}</td>
+                        <td class="status-column" style="font-size: 36px;">{{ "On Time" if not departure.cancelled else "Delayed" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Table for Sportanlage Süd -->
+    <div class="container mt-4" id="table-sportanlage" style="display: none;">
+        <div class="table-responsive">
+            <table class="table table-bordered" style="width:100%;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="zeit-column" style="font-size: 36px;">Zeit</th>
+                        <th class="zeit-column" style="font-size: 24px;"><span class="otherlang" style="font-size: 24px;">Time/Temps</span></th>
+                        <th class="zug-column" style="font-size: 36px;">Zug/Bus <span class="otherlang" style="font-size: 24px;">Train/Bus</span></th>
+                        <th class="ziel-column" style="font-size: 36px;">Ziel <span class="otherlang" style="font-size: 24px;">Destination</span></th>
+                        <th class="gleis-column" style="font-size: 36px;">Gleis <span class="otherlang" style="font-size: 24px;">Platform/Voie</span></th>
+                        <th class="status-column" style="font-size: 36px;">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for departure in departures_sportanlage %}
+                    <tr class="{{ 'table-success' if not departure.cancelled else 'table-danger' }}">
+                        <td class="zeit-column" style="font-size: 36px;">{{ departure.dateTime.strftime('%H:%M') }}</td>
+                        <td class="zeit-column">
+                            {% if departure.delay_minutes is defined %}
+                                {{ departure.delay_minutes }} min
+                            {% else %}
+                                +0 min
+                            {% endif %}
+                        </td>
+                        <td class="zug-column" style="font-size: 36px;">{{ departure.name }}</td>
+                        <td class="ziel-column" style="font-size: 36px;">{{ departure.direction }}</td>
+                        <td class="gleis-column" style="font-size: 36px;">{{ departure.platform }}</td>
+                        <td class="status-column" style="font-size: 36px;">{{ "On Time" if not departure.cancelled else "Delayed" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
