@@ -68,8 +68,8 @@
                     <tr class="{{ 'table-success' if not departure.cancelled else 'table-danger' }}">
                         <td class="zeit-column" style="font-size: 36px;">{{ departure.dateTime.strftime('%H:%M') }}</td>
                         <td class="zeit-column">
-                            {% if departure.delay is defined %}
-                                {{ departure.delay }} min
+                            {% if departure.delay_minutes is defined %}
+                                {{ departure.delay_minutes }} min
                             {% else %}
                                 +0 min
                             {% endif %}
@@ -104,8 +104,8 @@
                     <tr class="{{ 'table-success' if not departure.cancelled else 'table-danger' }}">
                         <td class="zeit-column" style="font-size: 36px;">{{ departure.dateTime.strftime('%H:%M') }}</td>
                         <td class="zeit-column">
-                            {% if departure.delay is defined %}
-                                {{ departure.delay }} min
+                            {% if departure.delay_minutes is defined %}
+                                {{ departure.delay_minutes }} min
                             {% else %}
                                 +0 min
                             {% endif %}
