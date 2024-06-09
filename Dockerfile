@@ -4,7 +4,7 @@
 # If you need more help, visit the Dockerfile reference guide at
 # https://docs.docker.com/engine/reference/builder/
 
-ARG PYTHON_VERSION=3.12
+ARG PYTHON_VERSION=3.12.4
 FROM python:${PYTHON_VERSION}-slim as base
 RUN apt-get update
 RUN apt-get upgrade -y
