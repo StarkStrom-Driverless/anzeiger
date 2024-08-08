@@ -4,8 +4,7 @@
 # If you need more help, visit the Dockerfile reference guide at
 # https://docs.docker.com/engine/reference/builder/
 
-ARG PYTHON_VERSION=3.12.4
-FROM python:${PYTHON_VERSION}-slim as base
+FROM python:3.12.4-slim as base
 RUN apt-get update
 RUN apt-get upgrade -y
 RUN apt-get install wget -y
@@ -43,7 +42,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 COPY . .
 
 RUN wget https://logos-download.com/wp-content/uploads/2016/03/DB_Deutsche_Bahn_AG_logo_logotype_emblem-700x495.png -O static/db.png
-RUN wget https://cdn.freebiesupply.com/logos/large/2x/go-ahead-company-logo-black-and-white.png -O static/goahead.png
+RUN wget https://upload.wikimedia.org/wikipedia/commons/a/a9/Arverio-by-logo.svg -O static/goahead.svg
 
 # Switch to the non-privileged user to run the application.
 USER appuser
