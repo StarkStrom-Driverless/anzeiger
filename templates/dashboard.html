@@ -5,7 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <meta http-equiv="refresh" content="60">
+    <script>
+        // Ersetzt das meta refresh
+        setTimeout(function() {
+            window.location.reload();
+        }, 60000); // 60 Sekunden
+    </script>
     <title>DB Abfahrten</title>
 </head>
 
