@@ -4,7 +4,7 @@
 # If you need more help, visit the Dockerfile reference guide at
 # https://docs.docker.com/engine/reference/builder/
 
-FROM python:3.13.7-slim AS base
+FROM python:3.14.0-slim AS base
 RUN apt-get update
 RUN apt-get upgrade -y
 RUN apt-get install wget -y
